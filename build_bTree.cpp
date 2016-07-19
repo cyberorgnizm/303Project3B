@@ -9,6 +9,7 @@
 #include "build_bTree.h"
 #include <vector>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 
@@ -49,56 +50,55 @@ void morse_code::delete_tree(letter *leaf)
 
 void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 {
-    if(key < leaf->key)
+    if (leaf == NULL)
     {
-        if(leaf->left != NULL)
-            insert(key, code, leaf->left);
-        else
-        {
-            leaf->left = new letter;
-            leaf->left->key = key;
-            leaf->left->code = code;
-            leaf->left->left = NULL;
-            leaf->left->right = NULL;
-        }
+        leaf = new letter;
+        leaf->key = key;
+        leaf->code = code;
+        leaf->left = NULL;
+        leaf->right = NULL;
     }
-    else if (key >= leaf->key)
+    else
     {
-        if(leaf->right != NULL)
-            insert(key, code, leaf->right);
-        else
+        if (key < leaf->key)
         {
-            leaf->right = new letter;
-            leaf->right->key = key;
-            leaf->right->code = code;
-            leaf->right->left = NULL;
-            leaf->right->right = NULL;
+            if (leaf->left != NULL)
+                insert(key, code, leaf->left);
+            else
+            {
+                leaf->left = new letter;
+                leaf->left->key = key;
+                leaf->left->code = code;
+                leaf->left->left = NULL;
+                leaf->left->right = NULL;
+            }
+        }
+        else if (key >= leaf->key)
+        {
+            if (leaf->right != NULL)
+                insert(key, code, leaf->right);
+            else
+            {
+                leaf->right = new letter;
+                leaf->right->key = key;
+                leaf->right->code = code;
+                leaf->right->left = NULL;
+                leaf->right->right = NULL;
+            }
         }
     }
 }
 
-void morse_code::build_tree(string file, morse_code& tree)
-{
-    ifstream fin(file);
-    char key_hold;
-    string code_ish;
-    vector<char> code_hold;
-    while(fin>>key_hold>>code_ish)
-    {
-        for(int i = 0; i < code_ish.size(); i++)
-            code_hold.push_back(code_ish[i]);
-        tree.insert(key_hold, code_hold);
-    }
-}
+
 
 
 letter* morse_code::search(vector<char> code, letter *leaf)
 {
-    if(leaf != NULL)
+    if (leaf != NULL)
     {
-        if(code == leaf->code)
+        if (code == leaf->code)
             return leaf;
-        else if(code < leaf->code)
+        else if (code < leaf->code)
             return search(code, leaf->left);
         else
             return search(code, leaf->right);
@@ -107,9 +107,9 @@ letter* morse_code::search(vector<char> code, letter *leaf)
         return NULL;
 }
 
-bool operator > (const vector<char>& other, const vector<char>& rhs)
+bool operator >(const vector<char>& other, const vector<char>& rhs)
 {
-    if(other[0] == '.' && rhs[0] == '_')
+    if (other[0] == '.' && rhs[0] == '_')
         return false;
     else if (other[0] == '_' && rhs[0] == '.')
         return true;
@@ -117,7 +117,7 @@ bool operator > (const vector<char>& other, const vector<char>& rhs)
     {
         for (int i = 1; i < other.size(); i++)
         {
-            if(other[i] == '.' && rhs[i] == '_')
+            if (other[i] == '.' && rhs[i] == '_')
                 return false;
             else if (other[i] == '_' && rhs[i] == '.')
                 return true;
@@ -128,7 +128,7 @@ bool operator > (const vector<char>& other, const vector<char>& rhs)
 
 bool operator < (const vector<char>& other, const vector<char>& rhs)
 {
-    if(other[0] == '_' && rhs[0] == '.')
+    if (other[0] == '_' && rhs[0] == '.')
         return false;
     else if (other[0] == '.' && rhs[0] == '_')
         return true;
@@ -136,7 +136,7 @@ bool operator < (const vector<char>& other, const vector<char>& rhs)
     {
         for (int i = 1; i < other.size(); i++)
         {
-            if(other[i] == '_' && rhs[i] == '.')
+            if (other[i] == '_' && rhs[i] == '.')
                 return false;
             else if (other[i] == '.' && rhs[i] == '_')
                 return true;
@@ -153,10 +153,10 @@ bool operator == (const vector<char>& other, const vector<char>& rhs)
         k = rhs.size();
     else
         k = other.size();
-        
+    
     for (int i = 0; i < k; i++)
     {
-        if(other[i] > rhs[i] || other[i] < rhs[i])
+        if (other[i] > rhs[i] || other[i] < rhs[i])
             return false;
     }
     return true;

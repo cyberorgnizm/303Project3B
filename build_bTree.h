@@ -14,6 +14,7 @@ using namespace std;
 
 struct letter
 {
+public:
     char key;
     vector<char> code;
     struct letter *left;
@@ -26,7 +27,6 @@ public:
     morse_code();
     ~morse_code();
     
-    void build_tree(string file, morse_code& tree);
     void insert(char key, vector<char> code);
     letter* search(vector<char> code);
     void delete_tree();
