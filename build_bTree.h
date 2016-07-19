@@ -10,7 +10,6 @@
 #define build_bTree_h
 
 #include <vector>
-#include <iostream>
 using namespace std;
 
 struct letter
@@ -27,15 +26,14 @@ public:
     morse_code();
     ~morse_code();
     
+    void build_tree(string file, morse_code& tree);
     void insert(char key, vector<char> code);
-    letter* search(char key);
     letter* search(vector<char> code);
     void delete_tree();
     
 private:
     void delete_tree(letter *leaf);
     void insert(char key, vector<char> code, struct letter *leaf);
-    letter* search(char key, letter *leaf);
     letter* search(vector<char> code, letter *leaf);
     friend bool operator > (const vector<char>& other, const vector<char>& rhs);
     friend bool operator < (const vector<char>& other, const vector<char>& rhs);

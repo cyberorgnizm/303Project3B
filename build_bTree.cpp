@@ -8,6 +8,7 @@
 
 #include "build_bTree.h"
 #include <vector>
+#include <fstream>
 using namespace std;
 
 
@@ -25,12 +26,6 @@ void morse_code::insert(char key, vector<char> code)
 {
     insert(key, code, root);
 }
-
-/*letter* morse_code::search(char key)
-{
-    return search(key, root);
-}
-*/
 
 letter* morse_code::search(vector<char> code)
 {
@@ -82,21 +77,20 @@ void morse_code::insert(char key, vector<char> code, struct letter *leaf)
     }
 }
 
-/*letter* morse_code::search(char key, letter *leaf)
+void morse_code::build_tree(string file, morse_code& tree)
 {
-    if(leaf != NULL)
+    ifstream fin(file);
+    char key_hold;
+    string code_ish;
+    vector<char> code_hold;
+    while(fin>>key_hold>>code_ish)
     {
-        if(key == leaf->key)
-            return leaf;
-        else if(key < leaf->key)
-            return search(key, leaf->left);
-        else
-            return search(key, leaf->right);
+        for(int i = 0; i < code_ish.size(); i++)
+            code_hold.push_back(code_ish[i]);
+        tree.insert(key_hold, code_hold);
     }
-    else
-        return NULL;
 }
-*/
+
 
 letter* morse_code::search(vector<char> code, letter *leaf)
 {
