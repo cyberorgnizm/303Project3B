@@ -48,20 +48,20 @@ int main()
 }
 
 
-void build_tree(string file, morse_code& tree)
+void build_tree(string file, morse_code& tree)  //builds tree given input file and tree root
 {
-    cout << "...building tree..."<<endl;
-    ifstream fin(file);
-    string whole_line;
-    char key_hold;
-    vector<char> code_hold;
-    while (!fin.eof())
+    cout << "...building tree..."<<endl;  //output to let the user know their input worked
+    ifstream fin(file); //file where the tree is kept
+    string whole_line;  //variable for each line of the file
+    char key_hold;  //the character that corresponds with each code
+    vector<char> code_hold;  //the code that corresponds which each character
+    while (!fin.eof())  //read whole file
     {
-        getline(fin, whole_line);
-        key_hold = whole_line[0];
+        getline(fin, whole_line);  //read in whole line of file
+        key_hold = whole_line[0];  //parse line into character and code
         for (int i = 1; i < whole_line.size(); i++)
             code_hold.push_back(whole_line[i]);
-        tree.insert(key_hold, code_hold);
+        tree.insert(key_hold, code_hold);  //put code/character combo into tree in order
     }
 }
 
