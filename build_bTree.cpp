@@ -93,7 +93,7 @@ void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 
 letter* morse_code::search(vector<char> code, letter *leaf)
 {
-	if (leaf != NULL)  //if there is still tree to traverse
+	if (leaf)  //if there is still tree to traverse
 	{
 		if (code == leaf->code)  //found correct node
 			return leaf;
@@ -141,20 +141,13 @@ bool operator < (const vector<char>& other, const vector<char>& rhs)
 	else
 		k = other.size();
 
-	if (other[0] == '_' && rhs[0] == '.') //if (dash) < (dot)
-		return false; //that is incorrect
-	else if (other[0] == '.' && rhs[0] == '_')  //(dot) < (dash)
-		return true; //that is correct
-	else //the first character of both codes is the same (dot) or (dash)
-	{
-		for (int i = 1; i < k; i++) //compare the next characters of both codes
+		for (int i = 0; i < k; i++) //compare the next characters of both codes
 		{
 			if (other[i] == '_' && rhs[i] == '.')  //(dash) < (dot)
 				return false;
 			else if (other[i] == '.' && rhs[i] == '_')  //(dot) < (dash)
 				return true;
 		}
-	}
 	return false; //the two codes are equal or rhs is a shorter code
 }
 
