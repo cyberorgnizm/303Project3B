@@ -1,10 +1,10 @@
 //
-//  build_bTree.hpp
-//  proj3I_WILL_DIE
+//  CS303
+//  Project 3B
 //
-//  Created by Lucicle on 7/19/16.
-//  Copyright © 2016 Lucicle. All rights reserved.
+//  Lucile Kull, John Buckley, Jeremy Culbreath
 //
+//	build_bTree.h
 
 #ifndef build_bTree_h
 #define build_bTree_h
