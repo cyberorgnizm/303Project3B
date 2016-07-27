@@ -53,32 +53,22 @@ void morse_code::delete_tree(letter *leaf)
 
 void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 {
+	if (leaf == NULL)
+	{
+		leaf = new letter; //create new node with correct values
+		leaf->key = key;
+		leaf->code = code;
+		leaf->left = NULL;
+		leaf->right = NULL;
+	}
 
 	if (code < leaf->code || code == leaf->code) //traverse tree to the left
 	{
-		if (leaf->left != NULL)
-			insert(key, code, leaf->left); //recursively traverse tree until open correct leaf is found
-		else
-		{
-			leaf->left = new letter; //create new node with correct values
-			leaf->left->key = key;
-			leaf->left->code = code;
-			leaf->left->left = NULL;
-			leaf->left->right = NULL;
-		}
+		insert(key, code, leaf->left); //recursively traverse tree until open correct leaf is found
 	}
 	else
 	{
-		if (leaf->right != NULL)
-			insert(key, code, leaf->right); //recursively traverse tree until open correct leaf is found
-		else
-		{
-			leaf->right = new letter; //create new node with correct values
-			leaf->right->key = key;
-			leaf->right->code = code;
-			leaf->right->left = NULL;
-			leaf->right->right = NULL;
-		}
+		insert(key, code, leaf->right); //recursively traverse tree until open correct leaf is found
 	}
 
 }
