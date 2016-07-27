@@ -117,7 +117,7 @@ string encodeMessage(map <char, string> map, string message) {
 //Decode message from morse code into plain text
 string decodeMessage(morse_code tree, string encoded) {
 	//vector <char> decodeThis;	//holds letter of morse code to decode		//part of plan A
-	string decodeThis="";
+	string decodeThis="";													//plan B
 
 	string message; //holds return string with plain text
 	char decoded;	//holds decoded letter
@@ -129,7 +129,7 @@ string decodeMessage(morse_code tree, string encoded) {
 
 			//decoded = tree.search(decodeThis)->key; //decode letter			// Plan A should work but doesn't, moving to plan B
 
-			decodeThis == ".-"			? decoded = 'A' :					//Plan B - ugly, but it works
+			decodeThis == ".-"			? decoded = 'A' :						//Plan B
 				decodeThis == "-..."	? decoded = 'B' :
 				decodeThis == "-.-."	? decoded = 'C' : 
 				decodeThis == "-.."		? decoded = 'D' : 
@@ -158,14 +158,14 @@ string decodeMessage(morse_code tree, string encoded) {
 			decoded = '/';	//slash means not a valid character
 
 			//decodeThis.clear();		// then clear the letter		//part of plan A
-			decodeThis = "";
+			decodeThis = "";											//plan B
 
 			message += decoded;//add decoded letter to the decoded message
 
 			if (encoded[i] == ' ') i++;					//go to next character if it is a space
 		}
 		//decodeThis.push_back(encoded[i]);	//adds character to morse code letter		//part of plan A
-		decodeThis += encoded[i];
+		decodeThis += encoded[i];														//plan B
 	}
 	return message;
 }
