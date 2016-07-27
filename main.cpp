@@ -15,14 +15,17 @@ using namespace std;
 void build_tree(string file, morse_code& tree);
 map <char, string> populateMap(); //Populate map for english char and morse code eqivilent
 string encodeMessage(map <char, string> map, string message); //Encode message using morse code
+string decodeMessage(morse_code tree, string message); //Decode message from morse code into plain text
+
 
 int main()
 {
     
     morse_code tree;
     string encodedMessage; //Holds morse code encoded message
-    string originalMessage; //Holds original message to be encoded
-    
+	string originalMessage; //Holds original message to be encoded or after decoding
+
+
     //Generates/populates map using english character as a key and the equivilent morse code as value
     //Stores in variable morseMap
     map <char,string> morseMap = populateMap();
@@ -32,6 +35,8 @@ int main()
     cin >> file_name;
     build_tree(file_name, tree);
     
+
+	/* This encodes a message from plain text to morse code */
     cout << "Please enter a message to encode using morse code:\n--->  ";
     
     //Get message to be encoded in morse code, store in variable originalMessage
@@ -42,6 +47,20 @@ int main()
     
     //Print morse code encoded message
     cout << "The original message coded with morse code is " + encodedMessage << endl;
+
+	
+	/* This decodes a message from morse code to plain text */
+	cout << "Please enter a morse code message ( . and - only, separate letters with spaces ) to decode into plain text:\n--->  ";
+
+	//Get message to be decoded from morse code, store in variable encodedMessage
+	string temp; getline(cin, temp);	//clears cin buffer
+	getline(cin, encodedMessage);
+
+	//Pass message to decode message, store decoded message in variable originalMessage
+	originalMessage = decodeMessage(tree, encodedMessage);
+
+	//Print morse code encoded message
+	cout << "The message decoded with morse code is " + originalMessage << endl;
     
     system("pause");
     return 0;
@@ -146,3 +165,25 @@ string encodeMessage(map <char, string> map, string message){
     
     return tempString;
 }
+
+
+//Decode message from morse code into plain text
+string decodeMessage(morse_code tree, string encoded) {
+	string decodeThis;	//holds letter of morse code to decode
+	string decoded; //holds return string with plain text
+
+
+	for (int i = 0; i < encoded.length(); i++) {		//goes through entire message
+		if ((encoded[i] == ' ') || (i == encoded.length() - 1)) {	// if this character is a space or the last character
+
+			decoded += decodeThis; //add decoded letter to the decoded message
+			// replace with function that decodes each character
+
+			if (encoded[i] == ' ') i++;					//go to next character if it is a space
+			decodeThis = "";		// and clear the letter
+		}
+		decodeThis = encoded[i];	//adds character to morse code letter
+	}
+	return decoded;
+}
+
