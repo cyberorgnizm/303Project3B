@@ -35,38 +35,38 @@ letter* morse_code::search(vector<char> code)
 
 void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 {
-	letter* t = new letter;
+	letter* t = new letter;  //build a new node with the data given
 	t->key = key;
 	t->code = code;
 	t->left = t->right = NULL;
 
-	if (leaf->left == NULL && leaf->right == NULL)
+	if (leaf->left == NULL && leaf->right == NULL) //if this is the first node (do not enter at root)
 	{
 		leaf->left = t;
 		return;
 	}
-	while (leaf)
+	while (leaf) //while we haven't inserted yet
 	{
-		if (code < leaf->code)
+		if (code < leaf->code) //go left
 		{
-			if (leaf->left == NULL)
+			if (leaf->left == NULL) //if you can insert
 			{
-				leaf->left = t;
+				leaf->left = t; //do insert!
 				break;
 			}
-			else
+			else //if you cant insert, move down the tree
 				leaf = leaf->left;
 		}
 
-		else
+		else //go right
 		{
-			if (leaf->right == NULL)
+			if (leaf->right == NULL) //if you can insert
 			{
-			leaf->right = t;
+			leaf->right = t; //do insert!
 			break;
 			}
 			else
-				leaf = leaf->right;
+				leaf = leaf->right; //if you cant insert, move down the tree
 		}
 	}
 }
@@ -131,7 +131,7 @@ bool operator < (const vector<char>& other, const vector<char>& rhs)
 
 bool operator == (const vector<char>& other, const vector<char>& rhs)
 {
-	if (other.size() != rhs.size())
+	if (other.size() != rhs.size()) //they arent the same size they cant be equal
 		return false;
 
 	for (int i = 0; i < other.size(); i++)  //compare each character in the code
