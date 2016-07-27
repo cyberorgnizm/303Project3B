@@ -63,21 +63,30 @@ void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 		leaf->left = t;
 		return;
 	}
-
-	while (leaf->left && leaf->right)
+	while (leaf)
 	{
-		if (code < leaf->code) //traverse tree to the left
-			leaf = leaf->left;
+		if (code < leaf->code)
+		{
+			if (leaf->left == NULL)
+			{
+				leaf->left = t;
+				break;
+			}
+			else
+				leaf = leaf->left;
+		}
 
-		else if (code > leaf->code)
-			leaf = leaf->right;
 		else
+		{
+			if (leaf->right == NULL)
+			{
+			leaf->right = t;
 			break;
+			}
+			else
+				leaf = leaf->right;
+		}
 	}
-	if (code < leaf->code)
-		leaf->left = t;
-	else
-		leaf->right = t;
 }
 
 
