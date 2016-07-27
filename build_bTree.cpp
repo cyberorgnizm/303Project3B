@@ -21,10 +21,6 @@ morse_code::morse_code()
 	root->right = NULL;
 }
 
-morse_code::~morse_code()
-{
-	delete_tree();  //calls delete on tree
-}
 
 void morse_code::insert(char key, vector<char> code)
 {
@@ -36,20 +32,6 @@ letter* morse_code::search(vector<char> code)
 	return search(code, root);  //calls and returns result of private search function starting at root
 }
 
-void morse_code::delete_tree()
-{
-	delete_tree(root);  //calls private delete function starting at root
-}
-
-void morse_code::delete_tree(letter *leaf)
-{
-	if (leaf != NULL) //recursive delete function
-	{
-		delete_tree(leaf->left); //call delete function on left tree
-		delete_tree(leaf->right);  //call delete function on right tree
-		delete leaf;  //delete current node
-	}
-}
 
 void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 {
@@ -115,13 +97,8 @@ bool operator >(const vector<char>& other, const vector<char>& rhs)
 		k = other.size();
 
 	//(dot) is less than (dash)
-	if (other[0] == '.' && rhs[0] == '_') //if (dot) > (dash)
-		return false; //(dot) is not > (dash)
-	else if (other[0] == '_' && rhs[0] == '.')  //if (dash) > (dot)
-		return true; //(dot) is > (dash)
-	else //if the first character of both codes is the same
 	{
-		for (int i = 1; i < k; i++)  //compare the following characters
+		for (int i = 0; i < k; i++)  //compare the following characters
 		{
 			if (other[i] == '.' && rhs[i] == '_')  //if (dot) > (dash)
 				return false;  //we know it is not
