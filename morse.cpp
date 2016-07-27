@@ -28,6 +28,7 @@ void build_tree(string file, morse_code& tree)  //builds tree given input file a
 		for (int i = 1; i < whole_line.size(); i++)
 			code_hold.push_back(whole_line[i]);
 		tree.insert(key_hold, code_hold);  //put code/character combo into tree in order
+		code_hold.clear();
 	}
 }
 
@@ -96,17 +97,17 @@ map <char, string> populateMap() {
 }
 
 //Encode message in morse code
-string encodeMessage(map <char, string> map, string message) {
+string encodeMessage(map <char, string> map, string message){
 
 	string tempString; //Holds return string with morse code
 	char tempChar; //Holds char to be encoded
 
-				   //For loop to transverse original message and encode chars
+	//For loop to transverse original message and encode chars
 	for (unsigned i = 0; i<message.length(); ++i)
 	{
 		tempChar = message.at(i); //Get char
 
-								  //Look up morse code value using char and add that value and a space to returned string
+		//Look up morse code value using char and add that value and a space to returned string
 		tempString += map.find(tempChar)->second + " ";
 	}
 
@@ -116,21 +117,23 @@ string encodeMessage(map <char, string> map, string message) {
 
 //Decode message from morse code into plain text
 string decodeMessage(morse_code tree, string encoded) {
-	string decodeThis;	//holds letter of morse code to decode
-	string decoded; //holds return string with plain text
+	vector <char> decodeThis;	//holds letter of morse code to decode
+	string message; //holds return string with plain text
+	char decoded;	//holds decoded letter
 
+	//goes through encoded message, adds characters to letter to be decoded, decodes letter and adds to message
+	for (int i = 0; i < encoded.size() + 1; i++) {		//goes through entire message
+		if ((encoded[i] == ' ') || (i == encoded.size())) {	// if this character is a space or the last character
 
-	for (int i = 0; i < encoded.length(); i++) {		//goes through entire message
-		if ((encoded[i] == ' ') || (i == encoded.length() - 1)) {	// if this character is a space or the last character
-
-			decoded += decodeThis; //add decoded letter to the decoded message
-								   // replace with function that decodes each character
+			decoded = tree.search(decodeThis)->key; //decode letter
+			decodeThis.clear();		// then clear the letter
+			message += decoded;//add decoded letter to the decoded message
 
 			if (encoded[i] == ' ') i++;					//go to next character if it is a space
-			decodeThis = "";		// and clear the letter
-		}
-		decodeThis = encoded[i];	//adds character to morse code letter
-	}
-	return decoded;
-}
 
+		}
+		decodeThis.push_back(encoded[i]);	//adds character to morse code letter
+
+	}
+	return message;
+}
