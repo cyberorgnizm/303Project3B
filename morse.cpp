@@ -116,21 +116,57 @@ string encodeMessage(map <char, string> map, string message) {
 
 //Decode message from morse code into plain text
 string decodeMessage(morse_code tree, string encoded) {
-	string decodeThis;	//holds letter of morse code to decode
-	string decoded; //holds return string with plain text
+	//vector <char> decodeThis;	//holds letter of morse code to decode		//part of plan A
+	string decodeThis="";
 
+	string message; //holds return string with plain text
+	char decoded;	//holds decoded letter
 
+					//goes through encoded message, adds characters to letter to be decoded, decodes letter and adds to message
 	for (int i = 0; i < encoded.length(); i++) {		//goes through entire message
 		if ((encoded[i] == ' ') || (i == encoded.length() - 1)) {	// if this character is a space or the last character
+			if (i == encoded.length() - 1 ) decodeThis += encoded[i];		//fixes missing last character issue to build letter
 
-			decoded += decodeThis; //add decoded letter to the decoded message
-								   // replace with function that decodes each character
+			//decoded = tree.search(decodeThis)->key; //decode letter			// Plan A should work but doesn't, moving to plan B
+
+			decodeThis == ".-"			? decoded = 'A' :					//Plan B - ugly, but it works
+				decodeThis == "-..."	? decoded = 'B' :
+				decodeThis == "-.-."	? decoded = 'C' : 
+				decodeThis == "-.."		? decoded = 'D' : 
+				decodeThis == "."		? decoded = 'E' : 
+				decodeThis == "..-."	? decoded =  'F': 
+				decodeThis == "--."		? decoded = 'G' :
+				decodeThis == "...."	? decoded = 'H' :
+				decodeThis == ".."		? decoded = 'I' :
+				decodeThis == ".---"	? decoded = 'J' :
+				decodeThis == "-.-"		? decoded = 'K' :
+				decodeThis == ".-.."	? decoded = 'L' :
+				decodeThis == "--"		? decoded = 'M' :
+				decodeThis == "-."		? decoded = 'N' :
+				decodeThis == "---"		? decoded = 'O' :
+				decodeThis == ".--."	? decoded = 'P' :
+				decodeThis == "--.-"	? decoded = 'Q' :
+				decodeThis == ".-."		? decoded = 'R' :
+				decodeThis == "..."		? decoded = 'S' :
+				decodeThis == "-"		? decoded = 'T' :
+				decodeThis == "..-"		? decoded = 'U' :
+				decodeThis == "...-"	? decoded = 'V' :
+				decodeThis == ".--"		? decoded = 'W' :
+				decodeThis == "-..-"	? decoded = 'X' :
+				decodeThis == "-.--"	? decoded = 'Y' :
+				decodeThis == "--.."	? decoded = 'Z' :
+			decoded = '/';	//slash means not a valid character
+
+			//decodeThis.clear();		// then clear the letter		//part of plan A
+			decodeThis = "";
+
+			message += decoded;//add decoded letter to the decoded message
 
 			if (encoded[i] == ' ') i++;					//go to next character if it is a space
-			decodeThis = "";		// and clear the letter
 		}
-		decodeThis = encoded[i];	//adds character to morse code letter
+		//decodeThis.push_back(encoded[i]);	//adds character to morse code letter		//part of plan A
+		decodeThis += encoded[i];
 	}
-	return decoded;
+	return message;
 }
 
