@@ -1,10 +1,9 @@
 //
-//  CS303
-//  Project 3B
+//  build_bTree.hpp
+
+//  Created by Lucicle on 7/19/16.
+//  Copyright © 2016 Lucicle. All rights reserved.
 //
-//  Lucile Kull, John Buckley, Jeremy Culbreath
-//
-//	build_bTree.h
 
 #ifndef build_bTree_h
 #define build_bTree_h
@@ -12,34 +11,31 @@
 #include <vector>
 using namespace std;
 
-struct letter
+struct letter  //node for tree
 {
 public:
-    char key;
-    vector<char> code;
-    struct letter *left;
-    struct letter *right;
+	char key; //characters
+	vector<char> code;  //morse code vector
+	struct letter *left;  //pointers to continue tree
+	struct letter *right;
 };
 
 class morse_code
 {
 public:
-    morse_code();
-    ~morse_code();
-    
-    void insert(char key, vector<char> code);
-    letter* search(vector<char> code);
-    void delete_tree();
-    
-private:
-    void delete_tree(letter *leaf);
-    void insert(char key, vector<char> code, struct letter *leaf);
-    letter* search(vector<char> code, letter *leaf);
-    friend bool operator > (const vector<char>& other, const vector<char>& rhs);
-    friend bool operator < (const vector<char>& other, const vector<char>& rhs);
-    friend bool operator == (const vector<char>& other, const vector<char>& rhs);
-    
-    letter *root;
+	morse_code();  //constructor
+	
+	void insert(char key, vector<char> code);  //function to add to tree
+	letter* search(vector<char> code); //function to find code/character combo when given a code
+	
+
+	void insert(char key, vector<char> code, struct letter *leaf); //insert node starting at given node
+	letter* search(vector<char> code, letter *leaf); //search starting at given node
+	friend bool operator > (const vector<char>& other, const vector<char>& rhs); //overloaded > operator for search and insert
+	friend bool operator < (const vector<char>& other, const vector<char>& rhs); //overloaded < operator for search and insert
+	friend bool operator == (const vector<char>& other, const vector<char>& rhs); //overloaded == operator for search and insert
+
+	letter *root;  //root of tree
 };
 
 #endif /* build_bTree_hpp */
