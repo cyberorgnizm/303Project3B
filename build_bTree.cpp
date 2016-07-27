@@ -53,24 +53,28 @@ void morse_code::delete_tree(letter *leaf)
 
 void morse_code::insert(char key, vector<char> code, struct letter *leaf)
 {
-	if (leaf == NULL)
+	letter* t = new letter;
+	t->key = key;
+	t->code = code;
+	t->left = t->right = NULL;
+
+	if (leaf->left == NULL && leaf->right == NULL)
 	{
-		leaf = new letter; //create new node with correct values
-		leaf->key = key;
-		leaf->code = code;
-		leaf->left = NULL;
-		leaf->right = NULL;
+		leaf->left = t;
+		return;
 	}
 
-	if (code < leaf->code || code == leaf->code) //traverse tree to the left
-	{
-		insert(key, code, leaf->left); //recursively traverse tree until open correct leaf is found
-	}
+
+		if (code < leaf->code && leaf->left != NULL) //traverse tree to the left
+			leaf = leaf->left;
+
+		else if (code > leaf->code && leaf->right != NULL)
+			leaf = leaf->right;
+
+	if (code < leaf->code)
+		leaf->left = t;
 	else
-	{
-		insert(key, code, leaf->right); //recursively traverse tree until open correct leaf is found
-	}
-
+		leaf->right = t;
 }
 
 
@@ -145,13 +149,10 @@ bool operator < (const vector<char>& other, const vector<char>& rhs)
 
 bool operator == (const vector<char>& other, const vector<char>& rhs)
 {
-	int k;  //we will only traverse the shorter code
-	if (other.size() > rhs.size())
-		k = rhs.size();
-	else
-		k = other.size();
+	if (other.size() != rhs.size())
+		return false;
 
-	for (int i = 0; i < k; i++)  //compare each character in the code
+	for (int i = 0; i < other.size(); i++)  //compare each character in the code
 	{
 		if (other[i] > rhs[i] || other[i] < rhs[i])  //if they are not equal return false
 			return false;
